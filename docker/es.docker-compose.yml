@@ -1,0 +1,48 @@
+version: '3.7'
+
+x-logging:
+  &default-logging
+  options:
+    max-size: '1m'
+    max-file: '1'
+  driver: json-file
+
+services:
+  es:
+    container_name: stac_es
+    # image: docker.elastic.co/elasticsearch/elasticsearch:7.8.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.8.10
+    ports:
+      - 9200:9200
+      - 9300:9300
+    environment:
+      - discovery.type=single-node
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms1G -Xmx1G"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+    logging: *default-logging
+
+  kb:
+    container_name: stac_kb
+    # image: docker.elastic.co/kibana/kibana:7.8.0
+    image: docker.elastic.co/kibana/kibana:6.8.10
+    ports:
+      - 5601:5601
+    # https://www.elastic.co/guide/en/kibana/current/docker.html
+    environment:
+      - SERVER_NAME=stac_kb
+      - ELASTICSEARCH_HOSTS=http://stac_es:9200
+      - MONITORING_UI_CONTAINER_ELASTICSEARCH_ENABLED=true
+    depends_on:
+      - es
+    logging: *default-logging
+
+volumes:
+  es_data:
+    driver: local

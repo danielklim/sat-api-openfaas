@@ -1,0 +1,4 @@
+[submodule "lib/sat-api"]
+	path = lib/sat-api
+	url = https://github.com/sat-utils/sat-api
+	branch = master

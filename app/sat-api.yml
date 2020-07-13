@@ -1,0 +1,28 @@
+version: 1.0
+
+provider:
+  name: openfaas
+  gateway: http://localhost
+
+functions:
+  api:
+    lang: node12-git
+    handler: ./api
+    image: sao-api:latest
+    environment:
+      ES_HOST: "docker.for.win.localhost:9200"
+      SATAPI_URL: "http://localhost/stac"
+      STAC_ID: "stac-test"
+      STAC_VERSION: "0.7.0"
+      STAC_TITLE: "STAC Test"
+      STAC_DESCRIPTION: "Cool description, bruh"
+      STAC_DOCS_URL: "https://stacspec.org/"
+      ES_BATCH_SIZE: 500
+      SATAPI_ES_PRECISION: "5mi"
+      LOG_LEVEL: "info"
+  ingest:
+    lang: node12-git
+    handler: ./ingest
+    image: sao-ingest:latest
+    environment:
+      ES_HOST: "docker.for.win.localhost:9200"

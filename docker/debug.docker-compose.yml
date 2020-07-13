@@ -1,0 +1,49 @@
+version: '3.7'
+
+x-logging:
+  &default-logging
+  options:
+    max-size: '1m'
+    max-file: '1'
+  driver: json-file
+
+# For standing up debug instances of the API and Ingest containers
+services:
+  api:
+    container_name: api_debug
+    image: sao-api:latest
+    ports:
+      - 800:3000
+    environment:
+      ES_HOST: "docker.for.win.localhost:9200"
+      SATAPI_URL: "http://localhost/stac"
+      STAC_ID: "stac-test"
+      STAC_VERSION: "0.7.0"
+      STAC_TITLE: "STAC Test"
+      STAC_DESCRIPTION: "Cool description, bruh"
+      STAC_DOCS_URL: "https://stacspec.org/"
+      ES_BATCH_SIZE: 500
+      SATAPI_ES_PRECISION: "5mi"
+      LOG_LEVEL: "debug"
+    volumes:
+      - "../lib/sat-api/packages/api-lib:/home/app/function/node_modules/@sat-utils/api-lib/"
+      - "../app/api/handler.js:/home/app/function/handler.js"
+    logging: *default-logging
+    tty: true
+    entrypoint: ["sh", "-c"]
+    command: ["sh"]
+
+  ingest:
+    container_name: ingest_debug
+    image: sao-ingest:latest
+    ports:
+      - 801:3000
+    environment:
+      ES_HOST: "docker.for.win.localhost:9200"
+    volumes:
+      - "../lib/sat-api/packages/api-lib:/home/app/function/node_modules/@sat-utils/api-lib/"
+      - "../app/ingest/handler.js:/home/app/function/handler.js"
+    logging: *default-logging
+    tty: true
+    entrypoint: ["sh", "-c"]
+    command: ["sh"]

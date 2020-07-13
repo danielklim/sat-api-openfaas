@@ -1,0 +1,56 @@
+# Gateway
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: gateway
+  namespace: openfaas
+spec:
+  rules:
+  - host: localhost
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: gateway
+          servicePort: 8080
+
+---
+# app docker
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: api-docker
+  namespace: openfaas-fn
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  rules:
+  # assumes docker desktop for windows 
+  - host: "docker.for.win.localhost"
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: api
+          servicePort: 8080
+
+---
+# app localhost
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: api-localhost
+  namespace: openfaas-fn
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+  - host: "localhost"
+    http:
+      paths:
+      # https://kubernetes.github.io/ingress-nginx/examples/rewrite/
+      - path: /stac(/|$)(.*)
+        backend:
+          serviceName: api
+          servicePort: 8080
