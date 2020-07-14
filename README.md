@@ -4,7 +4,7 @@ This repository provides an example deployment of [SAT-API](https://github.com/s
 
 ## Background
 
-[SAT-API](https://github.com/sat-utils/sat-api) is a reference implementation of the STAC API specification. It is designed to be run on a serverless infrastructure with an ElasticSearch backing, as seen in the reference deployment at [SAT-API Deployment](https://github.com/sat-utils/sat-api-deployment). That example is written specifically for use on AWS Lambda with the AWS Managed ElasticSearch service and AWS Fargate for long-running jobs. While this may work for many use cases, there are other use cases for which that set of infrastructure choices is not ideal. The most obvious is local development, where the developer does not wish to deploy anything to AWS.
+[SAT-API](https://github.com/sat-utils/sat-api) is a reference implementation of the STAC API specification. It is designed to run on a serverless infrastructure with an ElasticSearch backing, as seen in the reference deployment at [SAT-API Deployment](https://github.com/sat-utils/sat-api-deployment). That example is written specifically for use on AWS Lambda with the AWS Managed ElasticSearch service and AWS Fargate for long-running jobs. While this may work for many use cases, there are other use cases for which that set of infrastructure choices is not ideal. The most obvious is local development, where the developer does not wish to deploy anything to AWS.
 
 This repository, therefore, provides all the code necessary to run a self-hosted OpenFaaS and ElasticSearch/Kibana stack making use of Docker and the Docker Desktop implementation of Kubernetes. It is assumed that the user is relatively familiar with Kubernetes, Docker, and ElasticSearch, though 3rd party guides are referenced where helpful.
 
@@ -23,8 +23,9 @@ The bottom-line is that because of tight version constraints, the versions of so
 
 ## Roadmap
 
-1. Install Docker Desktop and Kubernetes. [Docs](https://docs.docker.com/docker-for-windows/install/).
-2. Install OpenFaaS. [Walkthrough/notes](./notes/openfaas-install.md).
-3. Build and deploy SAT-API to OpenFaaS.
-4. Set up ingresses to make application accessible.
-5. (optional) Test using public STAC data 
+1. [Install Docker Desktop and Kubernetes](https://docs.docker.com/docker-for-windows/install/)
+2. [Install OpenFaaS](./notes/openfaas-install.md)
+3. [Stand up ElasticSearch and Kibana](./notes/es-kb.md)
+4. [Deploy SAT-API to OpenFaaS](./notes/deploy-sat-api.md)
+- (optional) [Test using public STAC data](./notes/test-data.md)
+- (optional) [Migrate other functions from AWS Lambda](./notes/migrating-from-lambda.md)
