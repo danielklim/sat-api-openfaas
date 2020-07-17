@@ -1,0 +1,8 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: NGINX_CONTROLLER_NAME
+  namespace: default
+data:
+  proxy-real-ip-cidr: REAL_IP_CIDRS
+  use-proxy-protocol: 'true'

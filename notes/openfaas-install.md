@@ -18,7 +18,7 @@ curl -SLsf https://dl.get-arkade.dev/ | sudo sh
 
 ### Deploy openfaas to the k8s cluster
 
-The one important argument not mentioned in the stock documents is `--function-pull-policy IfNotPresent`. Without this argument, k8s will attempt to pull images from a remote container repo (Dockerhub by default) everytime you deploy, which means you *must* push your application container before every deploy, which is problematic. Adding this argument allows k8s to use local images, which means you can just build the Docker image locally and immediately deploy.
+The one important argument not mentioned in the stock documents is `--function-pull-policy IfNotPresent`. Without this argument, k8s will attempt to pull images from a remote container repo (Dockerhub by default) everytime you deploy, which means you *must* push your application container any time you make changes to the application, which is problematic when large numbers of changes are being made and tested, such as during development. Adding this argument allows k8s to use local images, which means you can just build the Docker image locally and immediately deploy.
 
 ```bash
 arkade install openfaas --function-pull-policy IfNotPresent

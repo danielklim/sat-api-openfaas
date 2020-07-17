@@ -21,7 +21,7 @@ The bottom-line is that because of tight version constraints, the versions of so
 - The application stack is deployed to OpenFaaS on top of a local Kubernetes cluster backed by Docker Desktop.
 - ElasticSearch and Kibana are deployed locally using docker-compose. They are kept external to the k8s cluster for the sake of easily migrating the setup to a production environment similar to SAT-API Deployment.
 
-## Roadmap
+## Steps
 
 1. [Install Docker Desktop and Kubernetes](https://docs.docker.com/docker-for-windows/install/)
 2. [Install OpenFaaS](./notes/openfaas-install.md)
@@ -29,3 +29,4 @@ The bottom-line is that because of tight version constraints, the versions of so
 4. [Deploy SAT-API to OpenFaaS](./notes/deploy-sat-api.md)
 - (optional) [Test using public STAC data](./notes/test-data.md)
 - (optional) [Migrate other functions from AWS Lambda](./notes/migrating-from-lambda.md)
+- (optional) [Deploy to AWS EKS](./notes/deploy-eks.md)
