@@ -18,7 +18,7 @@ module.exports = async (event, context, callback) => {
 			const { url, recursive, collectionsOnly } = body
 			const recurse = recursive === undefined ? true : recursive
 			const collections = collectionsOnly === undefined ? false : collectionsOnly
-			await satlib.ingest.ingest(url, satlib.es, recurse, collections)
+			satlib.ingest.ingest(url, satlib.es, recurse, collections)
 		}
 		else{
 			logger.error('Unhandled ingest event', event)
